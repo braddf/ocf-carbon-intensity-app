@@ -11,6 +11,7 @@ import {
   BarChart, Bar
 } from "recharts";
 import { getFormatted30MinWindow } from "../helpers/helpers";
+import Link from "next/link";
 
 type IProps = {
   data?: any
@@ -127,9 +128,12 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
       </Head>
 
       <main className="bg-black flex justify-center flex-col px-6 py-3 relative">
-        <h1 className="text-3xl text-white center flex-1 p-4 pt-6">
-          Regional Forecast for {selectedDate.toDateString()}
-        </h1>
+        <div className="flex justify-between">
+          <h1 className="text-3xl text-white center flex-1 p-4 pt-6">
+            Regional Forecast for {selectedDate.toDateString()}
+          </h1>
+          <Link href={'/'}>See National Forecast</Link>
+        </div>
 
         <div className="flex justify-end items-center">
           <label className="text-white mr-3">Select a date:</label>

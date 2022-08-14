@@ -13,6 +13,7 @@ import {
   Legend
 } from "recharts";
 import { calculatePercentageDifference, getFormatted30MinWindow } from "../helpers/helpers";
+import Link from "next/link";
 
 type IProps = {
   data?: any
@@ -74,9 +75,12 @@ const Home: NextPage<IProps> = ({}) => {
       </Head>
 
       <main className="bg-black flex justify-center flex-col px-6 py-3 relative">
-        <h1 className="text-3xl text-white center flex-1">
-          Daily Forecast for {selectedDate.toDateString()}
-        </h1>
+        <div className="flex justify-between">
+          <h1 className="text-3xl text-white center flex-1 p-4 pt-6">
+            Daily Forecast for {selectedDate.toDateString()}
+          </h1>
+          <Link href={'/regional'}>See Regional Forecasts</Link>
+        </div>
 
         <div className="flex justify-end items-center">
           <label className="text-white mr-3">Select a date:</label>
@@ -84,6 +88,8 @@ const Home: NextPage<IProps> = ({}) => {
                  value={selectedDate?.toISOString().slice(0, 10)}
                  onChange={(e) => setSelectedDate(e.target.valueAsDate || new Date())}/>
         </div>
+
+        {!data?.length && <h2 className="h-96 flex flex-1 justify-center items-center">Loading...</h2>}
 
         {data && data[0] && <ForecastLineChart data={data} selectedDate={selectedDate as Date}/>}
 
