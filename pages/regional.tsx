@@ -70,13 +70,13 @@ const toolTipLabels: Record<string, string> = {
 };
 const fuelColours: Record<string, string> = {
   coal: "#646464",
-  gas: "#25c5ff",
+  gas: "#6ed7ff",
   nuclear: "#d1ff99",
   oil: "#776556",
   solar: "#FFC425",
   wind: "#bedee5",
   biomass: "#409349",
-  hydro: "#69c0ef",
+  hydro: "#008cd7",
   imports: "#FF6384",
   other: "#9575b9",
 }
