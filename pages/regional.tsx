@@ -54,6 +54,8 @@ type FormattedRegionalData = {
 }
 
 const toolTipLabels: Record<string, string> = {
+  intensityForecast: "Carbon Intensity Forecast",
+  intensityIndex: "Carbon Intensity Index",
   from: "Time Period",
   coal: "Coal",
   gas: "Gas",
@@ -108,6 +110,8 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
         from: entry.from,
         to: entry.to,
         name: selectedRegionEntry.shortname,
+        intensityForecast: selectedRegionEntry.intensity.forecast,
+        intensityIndex: selectedRegionEntry.intensity.index,
       }
       fuelMixes.forEach((fuel) => {
         formattedEntry[fuel] = selectedRegionEntry.generationmix.find((mix) => mix.fuel === fuel)?.perc || 0;
