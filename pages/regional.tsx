@@ -150,7 +150,7 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
           <div className="flex flex-col text-white text-2xl" style={{minWidth: '30vh'}}>
             {!data?.length && <h2 className="h-96 flex flex-1 justify-center items-center">Loading...</h2>}
             {data?.length && data[0].regions.map((region) => {
-              return <div className="flex justify-between items-center">
+              return <div key={`region-${region.shortname}`} className="flex justify-between items-center">
                 <h4 className="">{region.shortname}</h4>
                 <div className="flex">
                   <span className="p-2 cursor-pointer" onClick={() => setRegion1(region.regionid)}>{region.regionid === region1 ? '✅' : '☑️'}</span>
@@ -215,7 +215,7 @@ const CompareChart: React.FC<{ data: FormattedRegionalData[] }> = ({data}) => {
         </div>
       }}/>
       <Legend margin={{top: 20, bottom: 30}} style={{paddingBottom: '30px'}}/>
-      {fuelMixes.map((fuel) => <Bar dataKey={fuel} stackId="a" fill={fuelColours[fuel]}/>)}
+      {fuelMixes.map((fuel) => <Bar key={`fuel-${fuel}`} dataKey={fuel} stackId="a" fill={fuelColours[fuel]}/>)}
     </BarChart>
   </ResponsiveContainer>
 }
