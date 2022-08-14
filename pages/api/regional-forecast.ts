@@ -13,7 +13,8 @@ export default function handler(
     'Accept': 'application/json'
   };
 
-  fetch(`https://api.carbonintensity.org.uk/intensity/date/${req.query.date}`,
+  console.log(req.query)
+  fetch(`https://api.carbonintensity.org.uk/regional/intensity/${req.query.date}/fw24h`,
     {
       method: 'GET',
       headers: headers
@@ -22,6 +23,7 @@ export default function handler(
       const result = await data.json();
       res.status(200).json(result)
     }).catch(function (body) {
-      res.status(500).json(body)
+    console.log(body);
+    res.status(500).json(body)
   });
 }

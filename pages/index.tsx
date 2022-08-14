@@ -12,6 +12,7 @@ import {
   LineChart,
   Legend
 } from "recharts";
+import { calculatePercentageDifference, getFormatted30MinWindow } from "../helpers/helpers";
 
 type IProps = {
   data?: any
@@ -27,7 +28,7 @@ type ForecastEntry = {
   }
 }
 
-const toolTiplabels: Record<string, string> = {
+const toolTipLabels: Record<string, string> = {
   FROM: "Time",
   ACTUAL: "Actual",
   FORECAST: "Forecast",
@@ -60,7 +61,6 @@ const Home: NextPage<IProps> = ({}) => {
       method: 'GET',
       headers
     }).then((res) => res.json()).then((data) => {
-      console.log(data.data)
       setData(data.data)
     });
     // })()
@@ -73,7 +73,7 @@ const Home: NextPage<IProps> = ({}) => {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
 
-      <main className="bg-slate-900 flex justify-center flex-col px-6 py-3 relative">
+      <main className="bg-black flex justify-center flex-col px-6 py-3 relative">
         <h1 className="text-3xl text-white center flex-1">
           Daily Forecast for {selectedDate.toDateString()}
         </h1>
@@ -95,21 +95,6 @@ const Home: NextPage<IProps> = ({}) => {
       </footer>
     </div>
   )
-}
-
-const getFormatted30MinWindow = (value: string) => {
-  const from = new Date(value);
-  const to = new Date(from);
-  if (to.getMinutes()) {
-    to.setHours(from.getHours() + 1, 0)
-  } else {
-    to.setMinutes(30)
-  }
-  return `${from.toISOString().slice(11, 16)} - ${to.toISOString().slice(11, 16)}`
-}
-
-const calculatePercentageDifference = (actual: number, forecast: number) => {
-  return ((actual - forecast) / actual * 100).toFixed(1)
 }
 
 const ForecastLineChart: React.FC<{ data: ForecastEntry[], selectedDate: Date }> = ({data, selectedDate}) => {
@@ -188,7 +173,7 @@ const ForecastLineChart: React.FC<{ data: ForecastEntry[], selectedDate: Date }>
                         key={`item-${name}`}
                         style={{color: graphColors[name]}}
                       >
-                        {`${toolTiplabels[name]}: ${formattedVal}`}
+                        {`${toolTipLabels[name]}: ${formattedVal}`}
                       </li>
                     );
                   })}
