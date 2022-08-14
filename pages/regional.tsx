@@ -94,7 +94,7 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
     const headers = {
       'Accept': 'application/json'
     };
-    fetch(`http://localhost:3000/api/regional-forecast?date=${selectedDate.toISOString()}`, {
+    fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/regional-forecast?date=${selectedDate.toISOString()}`, {
       method: 'GET',
       headers
     }).then((res) => res.json()).then((data) => {
