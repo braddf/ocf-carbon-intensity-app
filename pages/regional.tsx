@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { getFormatted30MinWindow } from "../helpers/helpers";
 import Link from "next/link";
+import { LoadingSpinner } from '../components/LoadingSpinner';
 
 type IProps = {
   data?: any
@@ -84,12 +85,14 @@ const fuelMixes = ["biomass", "coal", "gas", "hydro", "imports", "nuclear", "oil
 
 const RegionalForecast: NextPage<IProps> = ({}) => {
   const [data, setData] = useState<RegionalForecastEntry[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [region1, setRegion1] = useState<number>(1);
   const [region2, setRegion2] = useState<number>(2);
   const now = new Date();
   const lastAvailableForecast = new Date(now.getTime() + 1000 * 60 * 60 * 48)
   useEffect(() => {
+    setLoading(true);
     // (async () => {
     const headers = {
       'Accept': 'application/json'
@@ -99,6 +102,10 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
       headers
     }).then((res) => res.json()).then((data) => {
       setData(data.data)
+      setLoading(false);
+    }).catch((err) => {
+      console.log(err);
+      setLoading(false);
     });
     // })()
   }, [selectedDate])
@@ -160,12 +167,8 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
             })}
           </div>
           <div className="flex flex-col flex-1">
-            <div className="flex-1 border border-gray-400 mx-2 sm:mx-4 my-3 relative">
-              <CompareChart data={formattedData1}/>
-            </div>
-            <div className="flex-1 border border-gray-400 mx-2 sm:mx-4 my-3 relative">
-              <CompareChart data={formattedData2}/>
-            </div>
+              <CompareChart data={formattedData1} loading={loading}/>
+              <CompareChart data={formattedData2} loading={loading}/>
           </div>
         </div>
 
@@ -179,8 +182,10 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
   )
 }
 
-const CompareChart: React.FC<{ data: FormattedRegionalData[] }> = ({data}) => {
-  return <ResponsiveContainer width="100%" height={400}>
+const CompareChart: React.FC<{ data: FormattedRegionalData[], loading: boolean }> = ({data, loading}) => {
+  return <div className="flex-1 border border-gray-400 mx-2 sm:mx-4 my-3 relative">
+    {loading && <LoadingSpinner />}
+    <ResponsiveContainer width="100%" height={400}>
     <BarChart data={data}>
       <CartesianGrid strokeDasharray="3 3"/>
       <XAxis dataKey="from" tickFormatter={(tick) => {
@@ -218,6 +223,7 @@ const CompareChart: React.FC<{ data: FormattedRegionalData[] }> = ({data}) => {
       {fuelMixes.map((fuel) => <Bar key={`fuel-${fuel}`} dataKey={fuel} stackId="a" fill={fuelColours[fuel]}/>)}
     </BarChart>
   </ResponsiveContainer>
+  </div>
 }
 
 export default RegionalForecast

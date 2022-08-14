@@ -14,6 +14,7 @@ import {
 } from "recharts";
 import { calculatePercentageDifference, getFormatted30MinWindow } from "../helpers/helpers";
 import Link from "next/link";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 
 type IProps = {
   data?: any
@@ -50,11 +51,13 @@ const graphColors: Record<string, string> = {
 
 const Home: NextPage<IProps> = ({}) => {
   const [data, setData] = useState<ForecastEntry[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const now = new Date();
   const lastAvailableForecast = new Date(now.getTime() + 1000 * 60 * 60 * 48)
   useEffect(() => {
     // (async () => {
+    setLoading(true);
     const headers = {
       'Accept': 'application/json'
     };
@@ -63,6 +66,10 @@ const Home: NextPage<IProps> = ({}) => {
       headers
     }).then((res) => res.json()).then((data) => {
       setData(data.data)
+      setLoading(false);
+    }).catch((err) => {
+      console.log(err)
+      setLoading(false);
     });
     // })()
   }, [selectedDate])
@@ -89,8 +96,9 @@ const Home: NextPage<IProps> = ({}) => {
                  onChange={(e) => setSelectedDate(e.target.valueAsDate || new Date())}/>
         </div>
 
-        {!data?.length && <h2 className="h-96 flex flex-1 justify-center items-center">Loading...</h2>}
+        {!data?.length && <h2 className="h-96 flex justify-center items-center">Loading...</h2>}
 
+        {loading && <LoadingSpinner/>}
         {data && data[0] && <ForecastLineChart data={data} selectedDate={selectedDate as Date}/>}
 
       </main>
