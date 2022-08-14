@@ -167,6 +167,8 @@ const ForecastLineChart: React.FC<{ data: ForecastEntry[], selectedDate: Date }>
                   .map(([name, value]) => {
                     let formattedVal = value;
                     if (name === "FROM") formattedVal = getFormatted30MinWindow(value as string)
+                    if (name === "PERCENTAGE" && typeof value === 'string' && value.includes('Infinity')) return;
+
                     return (
                       <li
                         className="font-bold"
