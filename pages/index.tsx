@@ -84,7 +84,7 @@ const Home: NextPage<IProps> = ({}) => {
       <main className="bg-black flex justify-center flex-col px-2 sm:px-6 py-3 relative">
         <div className="flex items-end sm:items-start justify-between flex-col-reverse sm:flex-row">
           <h1 className="text-3xl text-white center flex-1 p-4 pt-6">
-            Daily Forecast for {selectedDate.toDateString()}
+            UK Daily Forecast for {selectedDate.toDateString()}
           </h1>
           <Link href={'/regional'}>See Regional Forecasts</Link>
         </div>

@@ -156,7 +156,7 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
         <div className="flex justify-center p-2 sm:p-4 flex-col sm:flex-row">
           <div className="flex flex-col text-white text-2xl" style={{minWidth: '30vh'}}>
             {!data?.length && <h2 className="h-96 flex flex-1 justify-center items-center">Loading...</h2>}
-            {data?.length && data[0].regions.map((region) => {
+            {data[0] && data[0].regions.map((region) => {
               return <div key={`region-${region.shortname}`} className="flex justify-between items-center">
                 <h4 className="">{region.shortname}</h4>
                 <div className="flex">
