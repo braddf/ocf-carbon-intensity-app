@@ -127,8 +127,8 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
 
-      <main className="bg-black flex justify-center flex-col px-6 py-3 relative">
-        <div className="flex justify-between">
+      <main className="bg-black flex justify-center flex-col px-3 sm:px-6 py-3 relative">
+        <div className="flex items-end sm:items-start justify-between flex-col-reverse sm:flex-row">
           <h1 className="text-3xl text-white center flex-1 p-4 pt-6">
             Regional Forecast for {selectedDate.toDateString()}
           </h1>
@@ -142,7 +142,7 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
                  onChange={(e) => setSelectedDate(e.target.valueAsDate || new Date())}/>
         </div>
 
-        <div className="flex justify-center p-4">
+        <div className="flex justify-center p-2 sm:p-4 flex-col sm:flex-row">
           <div className="flex flex-col text-white text-2xl" style={{minWidth: '30vh'}}>
             {!data?.length && <h2 className="h-96 flex flex-1 justify-center items-center">Loading...</h2>}
             {data?.length && data[0].regions.map((region) => {
@@ -156,10 +156,10 @@ const RegionalForecast: NextPage<IProps> = ({}) => {
             })}
           </div>
           <div className="flex flex-col flex-1">
-            <div className="flex-1 border border-gray-400 mx-4 my-3 relative">
+            <div className="flex-1 border border-gray-400 mx-2 sm:mx-4 my-3 relative">
               <CompareChart data={formattedData1}/>
             </div>
-            <div className="flex-1 border border-gray-400 mx-4 my-3">
+            <div className="flex-1 border border-gray-400 mx-2 sm:mx-4 my-3 relative">
               <CompareChart data={formattedData2}/>
             </div>
           </div>

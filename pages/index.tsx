@@ -74,8 +74,8 @@ const Home: NextPage<IProps> = ({}) => {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
 
-      <main className="bg-black flex justify-center flex-col px-6 py-3 relative">
-        <div className="flex justify-between">
+      <main className="bg-black flex justify-center flex-col px-2 sm:px-6 py-3 relative">
+        <div className="flex items-end sm:items-start justify-between flex-col-reverse sm:flex-row">
           <h1 className="text-3xl text-white center flex-1 p-4 pt-6">
             Daily Forecast for {selectedDate.toDateString()}
           </h1>
@@ -135,12 +135,6 @@ const ForecastLineChart: React.FC<{ data: ForecastEntry[], selectedDate: Date }>
           PERCENTAGE: `${calculatePercentageDifference(d.intensity.actual, d.intensity.forecast)}%`
         }
       })}
-      margin={{
-        top: 20,
-        right: 20,
-        bottom: 20,
-        left: 20,
-      }}
     >
       <CartesianGrid verticalFill={["#545454", "#6C6C6C"]} fillOpacity={0.5}/>
       <XAxis
@@ -188,7 +182,7 @@ const ForecastLineChart: React.FC<{ data: ForecastEntry[], selectedDate: Date }>
           );
         }}
       />
-      <Legend verticalAlign="top" align="right" height={36} formatter={(value) => legendLabels[value]}/>
+      <Legend verticalAlign="top" align="right" formatter={(value) => legendLabels[value]}/>
     </LineChart>
   </ResponsiveContainer>
 }
